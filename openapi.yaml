@@ -1,0 +1,192 @@
+openapi: '3.0.0'
+info:
+  description: Project X API description
+  title: Project X
+  version: 2.0.0
+servers:
+  - description: MockAPI URL
+    url: https://61e1e5ac3050a1001768203f.mockapi.io
+paths:
+  /users:
+    get:
+      description: Get users description
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+          description: Users
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Users
+      summary: Get users summary
+      tags:
+        - Users
+    post:
+      description: Create user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Create user request body
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: User
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Users
+      summary: Create user summary
+      tags:
+        - Users
+  /users/{id}:
+    delete:
+      description: Delete user with id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: No content
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Users
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found error
+      summary: Delete user with id summary
+      tags:
+        - Users
+    get:
+      description: Get user with id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: User
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Users
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found error
+      summary: Get user with id summary
+      tags:
+        - Users
+    put:
+      description: Update user with id
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Update user request body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: User
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Users
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found error
+      summary: Update user with id summary
+      tags:
+        - Users
+components:
+  parameters:
+    id:
+      description: Id
+      example: 1
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+  schemas:
+    NotFoundError:
+      properties:
+        error:
+          example: Entity not found
+          title: Not found error
+          type: string
+      type: object
+    UnauthorizedError:
+      properties:
+        error:
+          example: Access token is missing or invalid
+          title: Unauthorized error
+          type: string
+      type: object
+    User:
+      properties:
+        avatar:
+          example: https://cdn.fakercloud.com/avatars/dzantievm_128.jpg
+          title: User avatar
+          type: string
+        createdAt:
+          example: '2022-01-14T01:45:19.226Z'
+          format: date-time
+          title: User creation timestamp
+          type: string
+        name:
+          example: Lambert
+          title: User name
+          type: string
+      type: object
+    Users:
+      items:
+        $ref: '#/components/schemas/User'
+      type: array
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+security:
+  - bearerAuth: []
+tags:
+  - description: Tag 1 description
+    name: Users
