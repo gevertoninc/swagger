@@ -1,0 +1,93 @@
+info:
+  description: Project X API description
+  title: Project X
+  version: 2.0.0
+openapi: 3.0.0
+paths:
+  /users:
+    get:
+      description: Get users description
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    id:
+                      example: 1
+                      title: User id
+                      type: string
+                  type: object
+                type: array
+          description: Users
+      summary: Get users summary
+      tags:
+        - Users
+    post:
+      description: Create user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  example: Lambert
+                  title: User name
+                  type: string
+              required:
+                - name
+              type: object
+        description: Create user request body
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    example: 1
+                    title: User id
+                    type: string
+                type: object
+          description: User
+      summary: Create user
+      tags:
+        - Users
+  /users/{id}:
+    get:
+      description: Get user with id
+      parameters:
+        - description: User id
+          example: 1
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    example: 1
+                    title: User id
+                    type: string
+                type: object
+          description: User
+        '404':
+          content:
+            application/json:
+              example: Not found
+          description: User not found
+      summary: Get user with id summary
+      tags:
+        - Users
+servers:
+  - description: MockAPI URL
+    url: https://61e1e5ac3050a1001768203f.mockapi.io
+tags:
+  - description: Tag 1 description
+    name: Users
