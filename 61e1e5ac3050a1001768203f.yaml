@@ -1,3 +1,30 @@
+components:
+  parameters:
+    id:
+      description: Id
+      example: 1
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+  schemas:
+    User:
+      properties:
+        avatar:
+          example: https://cdn.fakercloud.com/avatars/dzantievm_128.jpg
+          title: User avatar
+          type: string
+        createdAt:
+          example: '2022-01-14T01:45:19.226Z'
+          format: date-time
+          title: User creation timestamp
+          type: string
+        name:
+          example: Lambert
+          title: User name
+          type: string
+      type: object
 info:
   description: Project X API description
   title: Project X
@@ -13,12 +40,7 @@ paths:
             application/json:
               schema:
                 items:
-                  properties:
-                    id:
-                      example: 1
-                      title: User id
-                      type: string
-                  type: object
+                  $ref: '#/components/schemas/User'
                 type: array
           description: Users
       summary: Get users summary
@@ -30,26 +52,14 @@ paths:
         content:
           application/json:
             schema:
-              properties:
-                name:
-                  example: Lambert
-                  title: User name
-                  type: string
-              required:
-                - name
-              type: object
+              $ref: '#/components/schemas/User'
         description: Create user request body
       responses:
         '201':
           content:
             application/json:
               schema:
-                properties:
-                  id:
-                    example: 1
-                    title: User id
-                    type: string
-                type: object
+                $ref: '#/components/schemas/User'
           description: User
       summary: Create user summary
       tags:
@@ -58,24 +68,13 @@ paths:
     delete:
       description: Delete user with id
       parameters:
-        - description: User id
-          example: 1
-          in: path
-          name: id
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/id'
       responses:
         '200':
           content:
             application/json:
               schema:
-                properties:
-                  id:
-                    example: 1
-                    title: User id
-                    type: string
-                type: object
+                $ref: '#/components/schemas/User'
           description: No content
         '404':
           content:
@@ -88,24 +87,13 @@ paths:
     get:
       description: Get user with id
       parameters:
-        - description: User id
-          example: 1
-          in: path
-          name: id
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/id'
       responses:
         '200':
           content:
             application/json:
               schema:
-                properties:
-                  id:
-                    example: 1
-                    title: User id
-                    type: string
-                type: object
+                $ref: '#/components/schemas/User'
           description: User
         '404':
           content:
@@ -118,37 +106,19 @@ paths:
     put:
       description: Update user with id
       parameters:
-        - description: User id
-          example: 1
-          in: path
-          name: id
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/id'
       requestBody:
         content:
           application/json:
             schema:
-              properties:
-                name:
-                  example: Lambert
-                  title: User name
-                  type: string
-              required:
-                - name
-              type: object
+              $ref: '#/components/schemas/User'
         description: Update user request body
       responses:
         '200':
           content:
             application/json:
               schema:
-                properties:
-                  id:
-                    example: 1
-                    title: User id
-                    type: string
-                type: object
+                $ref: '#/components/schemas/User'
           description: User
         '404':
           content:
