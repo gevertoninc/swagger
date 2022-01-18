@@ -51,10 +51,40 @@ paths:
                     type: string
                 type: object
           description: User
-      summary: Create user
+      summary: Create user summary
       tags:
         - Users
   /users/{id}:
+    delete:
+      description: Delete user with id
+      parameters:
+        - description: User id
+          example: 1
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    example: 1
+                    title: User id
+                    type: string
+                type: object
+          description: No content
+        '404':
+          content:
+            application/json:
+              example: Not found
+          description: User not found
+      summary: Delete user with id summary
+      tags:
+        - Users
     get:
       description: Get user with id
       parameters:
@@ -83,6 +113,49 @@ paths:
               example: Not found
           description: User not found
       summary: Get user with id summary
+      tags:
+        - Users
+    put:
+      description: Update user with id
+      parameters:
+        - description: User id
+          example: 1
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  example: Lambert
+                  title: User name
+                  type: string
+              required:
+                - name
+              type: object
+        description: Update user request body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    example: 1
+                    title: User id
+                    type: string
+                type: object
+          description: User
+        '404':
+          content:
+            application/json:
+              example: Not found
+          description: User not found
+      summary: Update user with id summary
       tags:
         - Users
 servers:
